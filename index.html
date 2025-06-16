@@ -79,7 +79,7 @@
     let nunotaAtual = "";
 
     async function buscarItens() {
-      const nunota = getQueryParam("NUNOTA");
+      const nunota = getQueryParam("nunota");
       if (!nunota) {
         alert('Número do pedido (NUNOTA) não informado na URL.');
         return;
@@ -139,69 +139,45 @@
     }
 
     async function confirmarPedido() {
-      const nunota = document.getElementById("nunotaInput").value;
-      const email = document.getElementById("emailFornecedor").value;
-      const dataEntrega = document.getElementById("dataEntrega").value;
-      const observacao = document.getElementById("observacao").value;
-
-      if (!nunota || !email || !dataEntrega || !observacao) {
-        alert("Preencha todos os campos antes de confirmar o pedido.");
-        return;
-      }
-
-      try {
-        const formattedDate = formatarDataBR(dataEntrega);
-
-        const response = await fetch("http://189.39.123.58:3000/api/confirmar-pedido", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            nunota: Number(nunota),
-            email,
-            dataEntrega: formattedDate,
-            observacao
-          })
-        });
-
-        const result = await response.json();
-
-        if (result.sucesso) {
-          alert("Informações salvas com sucesso!");
-        } else {
-          alert("Erro ao salvar: " + (result.erro || "Desconhecido"));
+        const nunota = getQueryParam("nunota");
+        const email = document.getElementById('emailFornecedor').value;
+        const dataEntrega = document.getElementById('dataEntrega').value;
+        const observacao = document.getElementById('observacao').value;
+      
+        if (!nunota || !email || !dataEntrega || !observacao) {
+          alert('Preencha todos os campos antes de confirmar o pedido.');
+          return;
         }
-      } catch (err) {
-        console.error("Erro:", err);
-        alert("Falha ao processar pedido.");
+      
+        try {
+          const response = await fetch('http://189.39.123.58:3000/api/confirmar-pedido', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              nunota,
+              email,
+              dataEntrega: formatarDataBR(dataEntrega),
+              observacao
+            })
+          });
+      
+          const result = await response.json();
+      
+          if (result.sucesso) {
+            alert("Informações salvas com sucesso!");
+          } else {
+            console.error("Erro no backend:", result);
+            alert("Erro ao salvar: " + (result.erro || "Desconhecido"));
+          }
+      
+        } catch (err) {
+          console.error("Erro:", err);
+          alert("Falha ao processar pedido.");
+        }
       }
-    }
 
-    async function confirmarPedido() {
-      const nunota = getQueryParam("nunota"); // agora pega da URL
-      const email = document.getElementById('emailFornecedor').value;
-      const dataEntrega = document.getElementById('dataEntrega').value;
-      const observacao = document.getElementById('observacao').value;
-
-      if (!nunota || !email || !dataEntrega || !observacao) {
-        alert('Preencha todos os campos antes de confirmar o pedido.');
-        return;
-      }
-
-      try {
-        const response = await fetch('http://189.39.123.58:3000/api/confirmar-pedido', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            nunota,
-            email,
-            dataEntrega: formatarDataBR(dataEntrega),
-            observacao
-          })
-        });
 
         const result = await response.json();
 
