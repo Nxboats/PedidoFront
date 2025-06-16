@@ -200,8 +200,11 @@
 
     window.onload = () => {
       const nunotaParam = getQueryParam("nunota");
+      console.log("Parâmetro recebido:", nunotaParam); // debug
       if (nunotaParam) {
-        buscarItens(); // já usa o parâmetro da URL
+        buscarItens();
+      } else {
+        alert("Número do pedido (nunota) não informado na URL.");
       }
     };
 
