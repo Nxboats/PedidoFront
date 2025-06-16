@@ -76,8 +76,8 @@
 
       try {
         const [resItens, resCabecalho] = await Promise.all([
-          fetch(`http://189.39.123.58:3000/api/itens-pedido?nunota=${nunota}`),
-          fetch(`http://189.39.123.58:3000/api/cabecalho-pedido?nunota=${nunota}`)
+          fetch(`https://189.39.123.58:3000/api/itens-pedido?nunota=${nunota}`),
+          fetch(`https://189.39.123.58:3000/api/cabecalho-pedido?nunota=${nunota}`)
         ]);
 
         const data = await resItens.json();
