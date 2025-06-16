@@ -179,7 +179,7 @@
     }
 
     async function confirmarPedido() {
-      const nunota = document.getElementById('nunotaInput').value;
+      const nunota = getQueryParam("nunota"); // agora pega da URL
       const email = document.getElementById('emailFornecedor').value;
       const dataEntrega = document.getElementById('dataEntrega').value;
       const observacao = document.getElementById('observacao').value;
@@ -223,7 +223,7 @@
     }
 
     window.onload = () => {
-      const nunotaParam = getQueryParam("NUNOTA");
+      const nunotaParam = getQueryParam("nunota");
       if (nunotaParam) {
         buscarItens(); // já usa o parâmetro da URL
       }
